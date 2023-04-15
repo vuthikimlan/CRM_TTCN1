@@ -1,0 +1,39 @@
+.cout_user{
+    display: flex;
+    position: relative;
+}
+
+.icon{
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background-color: #D3FFE7;
+    color: green;
+    padding: 20px;
+    height: 65px;
+    width: 65px;
+    font-size:34px;
+    margin: 0 10px;
+}
+.icon *{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+.title_user{
+    color: #acacac;
+    font-size: 16px;
+    margin:   0;
+    height: 25px;
+} 
+.cout_items{
+    position: absolute;
+    left: 93px;
+    bottom: -25px;
+    width: 123px;
+}
+.amount_user{
+    margin: 0;
+    font-weight: bold;
+    font-size: 25px;
+}

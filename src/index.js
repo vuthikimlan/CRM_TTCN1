@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ConfigProvider } from 'antd';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+import vinVN from "antd/locale/vi_VN"
+// import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={vinVN}>
+      <RouterProvider  router={router}/>
+    </ConfigProvider>
+    {/* <App /> */}
   </React.StrictMode>
 );
 
