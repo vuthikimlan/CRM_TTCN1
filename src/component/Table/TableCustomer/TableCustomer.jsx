@@ -93,7 +93,6 @@ function TableContent(props) {
   }
   
 
-   
   //sử dụng để gửi yêu cầu API khi trang thay đổi
   useEffect(() =>{
     handleGetCustomer()

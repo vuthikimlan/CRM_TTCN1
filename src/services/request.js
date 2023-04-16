@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 // const base_url = "https://b4de-116-104-51-98.ngrok-free.app"
-const base_url = "https://b4de-116-104-51-98.ngrok-free.app"
+const base_url = "https://7c22-27-76-111-171.ngrok-free.app"
 
 //Truoc khi call API
 axios.interceptors.request.use((requestConfig) => {
