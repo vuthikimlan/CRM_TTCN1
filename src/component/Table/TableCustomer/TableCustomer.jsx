@@ -1,14 +1,15 @@
 import { Button,  Dropdown,  Space, Table, Tag, Modal, Drawer, Popover } from 'antd';
 import {FilterOutlined, MoreOutlined } from '@ant-design/icons'
 import {  PageContainer } from '@ant-design/pro-components'
-import { useContext, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import '../TableStaff/Table.css'
 import {  useNavigate } from 'react-router-dom';
 import AddCustomer from '../../Modal/Add/AddCustomer';
 import {CloseOutlined, } from  '@ant-design/icons';
 import DetailCustomer from '../../Modal/Detail/DetailCustomer';
 import { delAllCustomer, delCustomer, getListCustomer } from '../../../services/lead';
-import { MyContext } from '../../../Context';
+import FilterCustomer from './FilterCustomer';
+
 // import DetailCustomer from '../../Modal/Detail/DetailCustomer';
 
 function TableContent(props) {
@@ -23,13 +24,7 @@ function TableContent(props) {
   const [currentCustomer, setCurrentCustomer] = useState({})
   const { confirm } = Modal;
 
-  // ///////////////////
-  // const {datas, setDatas} = useContext(MyContext)
-  // const {tableData, setTableData} = useContext(MyContext)
-
-  // //////////////////
-
-  const onSelectChange = (newSelectedRowKeys) => {
+   const onSelectChange = (newSelectedRowKeys) => {
     // console.log(newSelectedRowKeys);
     setIsChecked(!isChecked)
     setSelectedRowKeys(newSelectedRowKeys);
@@ -44,15 +39,13 @@ function TableContent(props) {
   // khi select sẽ hiện thị chọn bao nhiêu 
   const hasSelected = selectedRowKeys.length > 0
 
-  
-  
   const showhowConfirm = () => {
     confirm({
       title: 'Xoá khách hàng ',
       content: 'Việc này sẽ xóa khách hàng được chọn. Bạn có chắc chắn muốn xóa?',
-      onOk() {
-          handleDeleteAll(selectedRowKeys)
-      },
+      // onOk() {
+      //     handleDeleteAll(selectedRowKeys)
+      // },
       onCancel() {
         console.log('Cancel');
       },
@@ -69,28 +62,30 @@ function TableContent(props) {
     setLoading(true)
     getListCustomer().then((res) =>{
       setDataCustomer(res?.data?.items)
-      // console.log(setDataCustomer(res?.data?.items));
+
     }).finally(() =>{
       setLoading(false)
     })
   }
+  // console.log(dataCustomer);
 
   // Hàm xóa từng khách hàng
-  const handleDelete = (id) =>{
-    delCustomer(id).then((res)=>{
-      if(res.status === 200) {
-        handleGetCustomer()
-      }
-    })
-  }
+  // const handleDelete = (id) =>{
+  //   delCustomer(id).then((res)=>{
+  //     if(res.status === 200) {
+  //       handleGetCustomer()
+  //     }
+  //   })
+  // }
+
   // Hàm xóa tất cả các khách hàng
-  const handleDeleteAll = (selectedRowKeys) =>{
-    delAllCustomer(selectedRowKeys).then((res)=>{
-      if(res.status === 200) {
-        handleGetCustomer()
-      }
-    })
-  }
+  // const handleDeleteAll = (selectedRowKeys) =>{
+  //   delAllCustomer(selectedRowKeys).then((res)=>{
+  //     if(res.status === 200) {
+  //       handleGetCustomer()
+  //     }
+  //   })
+  // }
   
 
   //sử dụng để gửi yêu cầu API khi trang thay đổi
@@ -98,6 +93,19 @@ function TableContent(props) {
     handleGetCustomer()
     setLoading(false)
   },[])
+
+
+  const data = [];
+  for (let i = 0; i < 6; i++) {
+    data.push({
+      key: i,
+      customerName: 'Vũ Trần Yến Nhi',
+      phone: 1232434,
+      email: 'nhi45@gmail.com',
+      userName: 'Nguyễn Thị Liên',
+      tags:['Đang tư vấn']
+    });
+  }
 
 //  RUD
   const items = [
@@ -124,10 +132,10 @@ function TableContent(props) {
     {
       key: '3',
       label:'Xoá',
-      onClick: (id) =>{
-        handleDelete(id.id)
+      // onClick: (id) =>{
+      //   handleDelete(id.id)
 
-      }
+      // }
       // //////////////////////////
     },
   
@@ -137,55 +145,62 @@ function TableContent(props) {
   const columns = [
     {
       title: 'Tên khách hàng',
-      dataIndex: ['data','items','customerName'],
+      dataIndex: ['customerName'],
+      // dataIndex: 'customerName',
     },
     
     {
       title: 'Số điện thoại',
-      dataIndex: ['data','items','phone'],
+      dataIndex: ['items','phone'],
+      // dataIndex: 'phone',
 
     },
     {
       title: 'Email',
       dataIndex: ['data','items','email'],
+      // dataIndex: 'email',
     },
     {
       title: 'Người quản lý',
       dataIndex: ['data','items','group','user','userName'],
+      // dataIndex:'userName',
     },
     
     {
       title: 'Trạng thái',
       dataIndex: ['data','items','status', 'statusName'],
-      render: (_, { tags }) => (
-        <>
-          <Space> 
-            {tags.map((tag) => {
-              let color = tag.length > 5 ? 'geekblue' : 'green';
-              return (
-                <Tag color={color} key={tag}  >
-                  {tag}
-                </Tag> 
-              );
-            })}
-            
-            <Dropdown
-              className='dropdown'
-              menu={{items}}
-              trigger={['click']}
-            >
-                {/* Khi click vào icon moreOutLine thì hiện ra các lựa chọn */}
-                <Button className='more_option'
-                  onClick={(e) => e.preventDefault()}
+      // dataIndex: 'tags',
+      render: (tags) => (
+        <span>
+          {tags.map((tag) => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <>
+                <Tag color={color} key={tag}>
+                    {tag}
+                </Tag>
+                <Dropdown
+                  className='dropdown'
+                  menu={{items}}
+                  trigger={['click']}
                 >
+                {/* Khi click vào icon moreOutLine thì hiện ra các lựa chọn */}
+                  <Button className='more_option'
+                    onClick={(e) => e.preventDefault()}
+                  >
                     <MoreOutlined/>
-                </Button>
-            </Dropdown>
-              
-          </Space>
-        </>
+                  </Button>
+              </Dropdown>
+              </>
+            );
+          })}
+        </span>
       ),
     },
+    
   ];
   return (
     <div>
@@ -205,6 +220,10 @@ function TableContent(props) {
          
           <Popover 
             placement="bottom" 
+            content={
+              <FilterCustomer/>
+            }
+            trigger="click"
           >
             <Button  className='filter'> 
               <FilterOutlined /> 
@@ -231,15 +250,12 @@ function TableContent(props) {
        {/* Hiển thị thông tin chi tiết của khách hàng */}
         <Drawer
           title="Thông tin chi tiết của khách hàng"
-          width={700}
+          width={500}
           open={openDrawer}
           onClose={onClose}
           extra={
             <Space>
               <Button onClick={onClose}>Quay lại</Button>
-              <Button type="primary" onClick={onClose}>
-                OK
-              </Button>
             </Space>
           }
           >

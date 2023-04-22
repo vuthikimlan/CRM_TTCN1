@@ -1,6 +1,8 @@
-import { ModalForm, ProFormDatePicker } from '@ant-design/pro-components';
+// import { ModalForm, ProFormDatePicker } from '@ant-design/pro-components';
 import {ProForm, 
         ProFormText, 
+        ProFormSelect,
+        ModalForm
       } from '@ant-design/pro-components';
 import { creatCustom, updateCustomer } from '../../../services/lead';
 import { message } from 'antd';
@@ -45,24 +47,14 @@ function AddCustomer({onSuccess, openModal, data, onOpenChange}) {
         onOpenChange={onOpenChange}
       >
         <ProForm.Group>
-        <ProFormText 
-            width="md" 
-            name="customerId"
-            label="Mã khách hàng" 
-            placeholder="Mã khách hàng "
-          /> 
+        
         <ProFormText 
             width="md" 
             name="customerName" 
             label="Tên khách hàng" 
             placeholder="Tên khách hàng" 
           />  
-          <ProFormDatePicker 
-            width="md" 
-            name="createdDate" 
-            label="Ngày Tạo" 
-            placeholder="Vui lòng chọn"
-          />
+          
 
           <ProFormText 
             width="md" 
@@ -89,11 +81,32 @@ function AddCustomer({onSuccess, openModal, data, onOpenChange}) {
             label="Địa chỉ" 
             placeholder="Địa chỉ" 
           />
-          <ProFormText 
+          <ProFormSelect
             width="md" 
             name="statusName"
             label="Trạng thái" 
             placeholder="Trạng thái" 
+            options={[
+              {
+                value: '',
+                label: 'Tiềm năng',
+              },
+              {
+                value: '',
+                label: 'Thành công',
+              },
+              {
+                value: '',
+                label: 'Chờ gọi lại',
+              },
+              {
+                value: '',
+                label: 'Không nghe máy ',
+              },
+            ]}
+
+
+            
           />
           <ProFormText 
             width="md" 

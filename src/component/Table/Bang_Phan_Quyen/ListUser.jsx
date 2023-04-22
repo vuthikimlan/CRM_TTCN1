@@ -1,56 +1,63 @@
-import { Button, Table,  } from 'antd';
+import { Button, Table,  Drawer, Space} from 'antd';
 import {FileTextOutlined,  } from '@ant-design/icons'
 import {  PageContainer } from '@ant-design/pro-components'
 import { useState } from 'react';
 import '../TableStaff/Table.css'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CreateRole from '../../Modal/CreateRole/CreateRole';
+import DetailUser from './DetailUser/DetailUser';
 // import DetailCustomer from '../../Modal/Detail/DetailCustomer';
 
 const data = [];
-for (let i = 0; i < 5; i++){
-    data.push({  
-      key: i,    
-      name: `Trần Hoa Anh`,          //Gọi API 
-      id: 1,
-      num: 123234,
-      email: `anh123@gmail.com`,
-      group: `Kinh doanh`,
-      tags:['Tiềm năng'],
-    });
-
+for (let i = 0; i < 6; i++) {
+  data.push({
+    key: i,
+    customerName: 'Vũ Trần Yến Nhi',
+    phone: 1232434,
+    email: 'nhi45@gmail.com',
+    userName: 'Nguyễn Thị Liên',
+    tags:['Đang tư vấn']
+  });
 }
-  
+
 function ListUser(props) {
   // const location = useLocation()
   const navigate = useNavigate()
   const [openModal, setOpenModal] = useState()
-  
+  const  [openDrawer, setOpenDrawer] = useState()
+
+   
 
 
   //cột thông tin của bảng
   const columns = [
     {
-      title: 'ID',
-      dataIndex: ' ',
+      title: 'Tên người dùng',
+      dataIndex: ['data', 'items', 'userName'],
     },
     {
-      title: 'Tên vai trò',
-      dataIndex: '',
+      title: 'Vai trò',
+      dataIndex: ['data', 'items', 'role', 'roleName'],
+      // dataIndex: '',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: '',
+      title: 'Quyền',
+      render: () =>(
+        <Button className='detailRoleUser'
+          // onClick={
+          //   setOpenDrawer(true)
+          // }
+        >
+          Xem chi tiết
+        </Button>
+      )
     },
     {
-      title: ' Ngày tạo',
-      dataIndex: '',
+      title: ' Email',
+      dataIndex: ['data', 'items', 'email'],
+      // dataIndex: '',
     },
-    {
-      title: 'Ngày cập nhật',
-      dataIndex: '',
-      
-    },
+    
   ];
   return (
     <div>
@@ -78,6 +85,8 @@ function ListUser(props) {
         ]
         }
       >
+        
+
         <CreateRole
           openModal={openModal}
           onOpenChange = {(open) =>{
@@ -88,7 +97,15 @@ function ListUser(props) {
         />
         
         <Table columns={columns} dataSource={data} />
+
+        <Drawer 
+          title="Basic Drawer" 
+          placement="right" 
+          onClose={()=>{setOpenDrawer(false)}} 
+          open={openDrawer}>
         
+      </Drawer>
+       
       </PageContainer>
     </div>
   );

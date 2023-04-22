@@ -16,22 +16,15 @@ function AddStaff({onSuccess, openModal, data, onOpenChange}) {
         onOpenChange={onOpenChange}
       >
         <ProForm.Group>
-          <ProFormText
-            width="md"
-            name=""
-            label="Mã nhân viên"
-            placeholder="id"
-          />
-
           <ProFormText 
             width="md" 
-            name="" 
+            name="userName" 
             label="Tên nhân viên" 
             placeholder="name" 
           />
           <ProFormDatePicker 
             width="md" 
-            name="" 
+            name="date" 
             label="Ngày sinh" 
             placeholder="Ngày sinh" 
           />
@@ -43,15 +36,20 @@ function AddStaff({onSuccess, openModal, data, onOpenChange}) {
           />
           <ProFormText 
             width="md" 
-            name="" 
-            label="Số điện thoại" 
-            placeholder="phone" 
+            name="address" 
+            label="Địa chỉ" 
+            placeholder="Địa chỉ" 
           />
           <ProFormText 
             width="md" 
-            name="" 
+            name="password" 
             label="Mật khẩu" 
             placeholder="Mật khẩu" 
+          />
+          <ProFormText 
+            width="md" 
+            name="roleId" 
+            label="Mã vai trò" 
           />
         </ProForm.Group>
        

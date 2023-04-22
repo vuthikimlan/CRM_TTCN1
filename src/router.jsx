@@ -7,6 +7,7 @@ import TableContent from "./component/Table/TableStaff/TableStaff";
 import DetailCustomer from "./component/Modal/Detail/DetailCustomer";
 import ListRole from "./component/Table/Bang_Phan_Quyen/ListRole"
 import ListUser from "./component/Table/Bang_Phan_Quyen/ListUser"
+// import StatisticStatusCus from "./component/Chart/StatisticStatusCus";
 // import Loginpage from "./component/Login/loginpage";
 export const router = createBrowserRouter(
 [
@@ -39,12 +40,7 @@ export const router = createBrowserRouter(
             {
                 path:'staff',
                 element:<TableContent/>,
-                // children:[
-                //     {
-                //         path:'detailstaff',
-                //         element:<DetailStaff/>
-                //     }
-                // ]
+                
             },
             {
                 path:'listrole',
@@ -54,7 +50,11 @@ export const router = createBrowserRouter(
             {
                 path:'listuser',
                 element:<ListUser/>
-            }
+            },
+            // {
+            //     path:'statisticstatuscus',
+            //     element:<StatisticStatusCus/>
+            // }
 
         
         ]

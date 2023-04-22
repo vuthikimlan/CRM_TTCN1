@@ -5,6 +5,8 @@ import { useState } from 'react';
 import './Table.css'
 import AddStaff from '../../Modal/Add/AddStaff';
 import { useLocation, useNavigate } from 'react-router-dom';
+import DetailStaff from './DetailStaff';
+import FilterStaff from './FilterStaff';
 
 
 function TableContent(props) {
@@ -77,25 +79,40 @@ function TableContent(props) {
   
   ];
 
+  const data = [];
+  for (let i = 0; i < 6; i++) {
+    data.push({
+      key: i,
+      userId: 1,
+      userName: 'Vũ Thị Khánh Linh',
+      date: '12/3/2023',
+      email: 'nhi45@gmail.com',
+    });
+  }
+
   //cột thông tin của bảng
   const columns = [
     {
       title: 'Mã nhân viên',
-      dataIndex: ['data','items','userId'],
+      // dataIndex: ['data','items','userId'],
+      dataIndex: 'userId',
 
     },
     {
       title: 'Tên nhân viên',
-      dataIndex: ['data','items','userName'],
+      // dataIndex: ['data','items','userName'],
+      dataIndex: 'userName',
 
     },
     {
       title: 'Ngày tạo',
-      dataIndex: ['data','items','date'],
+      // dataIndex: ['data','items','date'],
+      dataIndex: 'date',
     },
     {
       title: 'Email',
-      dataIndex: ['data','items','email'],
+      // dataIndex: ['data','items','email'],
+      dataIndex: 'email',
 
     },
     {
@@ -137,7 +154,13 @@ function TableContent(props) {
           >
             + Thêm Nhân viên
           </Button> ,
-          <Popover  placement="bottom" >
+          <Popover  
+            placement="bottom"
+            content={
+              <FilterStaff/>
+            }
+            trigger='click'
+             >
               <Button  className='filter'> 
                 <FilterOutlined /> 
                 Lọc
@@ -157,31 +180,23 @@ function TableContent(props) {
         <Table 
           rowSelection={rowSelection} 
           columns={columns} 
-          dataSource={dataStaff} 
+          // dataSource={dataStaff} 
+          dataSource={data} 
+
           size='middle' 
         />
-          {/* <Drawer
-            title="Thông tin chi tiết của nhân viên" 
-            placement="right" 
-            open={openDrawer}
-            onClose={() => {setOpenDrawer(false)}}
-          >
-
-          </Drawer> */}
+        
            <Drawer
           title="Thông tin chi tiết của nhân viên"
-          width={700}
+          width={500}
           open={openDrawer}
           onClose={onClose}
           extra={
             <Space>
               <Button onClick={onClose}>Quay lại</Button>
-              <Button type="primary" onClick={onClose}>
-                OK
-              </Button>
             </Space>
-          }
-          >
+          }>
+            <DetailStaff/>
           </Drawer>
           <div className='edit' style={{ display: hasSelected ? "block" : "none" }}> 
           {/* style={{ display: isChecked ? "block" : "none" }} */}

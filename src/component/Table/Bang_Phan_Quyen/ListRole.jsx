@@ -32,7 +32,7 @@ function TableContent(props) {
   const columns = [
     {
       title: 'ID',
-      dataIndex: ' ',
+      dataIndex: ['data', 'items'],
     },
     {
       title: 'Tên vai trò',

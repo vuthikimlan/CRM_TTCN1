@@ -1,5 +1,6 @@
 import request from "./request"
 
-export const login = ({}) => {
-    return request.post(``, {}).then((res) => res)
+export const login = ({userName,password}) => {
+    return request.post(`/auth/login`, 
+    {userName,password}).then((res) => res)
 }

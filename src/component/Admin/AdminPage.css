@@ -38,7 +38,7 @@
     padding: 0; /*10px*/
     background-color: #EBFBF6;
     position: relative;
-    height: 25%;
+
 }
 .header_items{
     display: flex;
@@ -53,7 +53,7 @@
 }
 .btn{
     display: flex;
-     margin: 10px 120px 0 0 ;
+     margin: 15px 120px 0 0 ;
 }
 
 .input_search{

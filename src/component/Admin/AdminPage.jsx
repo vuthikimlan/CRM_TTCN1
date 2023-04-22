@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminPage.css'
-import HeaderCout from '../HeaderCout/HeaderCout';
-import TableContent from '../Table/TableStaff/TableStaff';
-// import TableCustomer from '../Table/TableCustomer/TableCustomer'
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import {
     TeamOutlined, 
@@ -14,14 +11,17 @@ import {
     UserOutlined
   } from '@ant-design/icons';
   import { Layout, Menu, Input, Drawer, Dropdown, Button, Space } from 'antd';
-import { MyContext } from '../../Context'; //////////
-import { debounce } from "lodash";
+// import { MyContext } from '../../Context'; //////////
+// import { debounce } from "lodash";
+import ProfileUser from './ProfileUser/ProfileUser';
 
   const { Header, Content, Sider } = Layout;
 
 function AdminPage(props) {
   const navigate = useNavigate()
+  const location = useLocation()
   const [openDrawer, setOpenDrawer] = useState()
+  const [defaultSelectedKeys, setDefaultSelectedKeys] = useState()
 
   // tìm kiếm:
   // const [datas, setDatas] = useState()
@@ -38,6 +38,28 @@ function AdminPage(props) {
   // const handleChange = (event) => {
   //   handleSearch(event.target.value);
   // };
+
+  // Ham giu nguyen trang khi tai lai 
+
+  useEffect(() =>{
+    // setSelectedKey([location.pathname]);
+    const pathname = location.pathname;
+    switch(pathname){
+      case '/adminpage/staff':
+        setDefaultSelectedKeys(['staff']);
+        break;
+      case'/adminpage/customer':
+        setDefaultSelectedKeys(['customer']);
+        break;
+      case'/adminpage/listrole':
+        setDefaultSelectedKeys(['listrole']);
+        break;
+      default: 
+        setDefaultSelectedKeys([]);
+        break;
+    }
+  }, [location.pathname])
+
 
   const listItem = [
     {
@@ -114,7 +136,9 @@ function AdminPage(props) {
               <Menu className='menu_items'
                   mode="inline"
                   items={listItem}
-                  defaultSelectedKeys={['1']}
+                  defaultSelectedKeys={defaultSelectedKeys}
+                  // onClick={e => setSelectedKey([e.key])}
+                  // selectedKeys={selectedKey}
               />
             </Sider>
 
@@ -127,7 +151,7 @@ function AdminPage(props) {
                     {/* ///////////////////////// */}
                     {/* Tìm kiếm nhân viên */}
                   <Input.Search 
-                  
+                    style={{marginTop: 3}}  
                     placeholder="input search text"  
                     enterButton />
                   {/* onSearch={onSearch} */}
@@ -135,20 +159,20 @@ function AdminPage(props) {
                     <Dropdown
                       menu={{items}}
                     >
-                      <Space>
-                        <UserOutlined 
-                          className='icon_admin'
-                          
-                        />
-                        <p className='title_admin'>Admin</p>
-                      </Space>
+                    <div style={{marginBottom: 10, display: 'flex'}}>
+                      <UserOutlined 
+                        className='icon_admin'
+                      />
+                      <p className='title_admin'>Admin</p>
+
+                    </div>
 
                     </Dropdown>
                   </div>
                 </div>
-                <div className='cout'>
+                {/* <div className='cout'>
                   <HeaderCout></HeaderCout>
-                </div>
+                </div> */}
               </Header>
               <Content className='content'>
                 <div style={{
@@ -172,8 +196,9 @@ function AdminPage(props) {
             title="Hồ Sơ"
             open={openDrawer}
             onClose={() =>{setOpenDrawer(false)}} 
+            
           >
-
+              <ProfileUser/>
           </Drawer>
         </div>
 

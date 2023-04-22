@@ -1,25 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
+import Cookies from 'js-cookie';
 import './login.css';
 import {  useNavigate } from 'react-router-dom';
+import { login } from '../../services/authen';
 // import ForgotPassword from './ForgotPassword';
 
 function Login(props) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleForgotpass = () => {
     navigate('/forgotpassword')
   }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = (values) => {
+    setLoading(true);
+    login(values).then((res) => {
+      if(res.status === 200) {
+        Cookies.set('jwt', res.data.jwt);
+        setLoading(false);
+        if(res.data.roles)
+        {
+          navigate('/adminpage/staff')
+        }
+      }
+    }).finally(() => {
+      setLoading(false)
+    })
+  };
+
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'This is a success message',
+    });
   };
 
   const onFinish = (values) => {
-    navigate('/adminpage')
+    navigate('/adminpage/staff')
+    success()
   };
 
   return (
+    
     <div className='loginpage'> 
       <div className='logo'>
         <img src="logocrm1.png" alt="" className='logo_img'/>
@@ -36,6 +61,7 @@ function Login(props) {
         onFinish={onFinish}
       >
           <p >Đăng Nhập</p>
+          {contextHolder}
         <Form.Item
           name="username"
           rules={[{ required: true, message: 'Tên tài khoản tối thiểu 4-6 ký tự' }]}
@@ -59,9 +85,15 @@ function Login(props) {
               placeholder="Mật khẩu"
           />
         </Form.Item>
-
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button button">
+          
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            className="login-form-button button"
+            
+            loading={loading}
+          >
             Đăng nhập
           </Button>
         </Form.Item>
